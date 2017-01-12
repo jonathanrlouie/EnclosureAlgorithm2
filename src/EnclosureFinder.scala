@@ -233,11 +233,9 @@ class EnclosureFinder {
                                enclosureAcc: List[Enclosure]
                              ): (List[Enclosure], Option[Position], Option[CellCluster]) = {
     if (visited.contains(currentPos)) {
-      // TODO remove everything inside of updatedCluster's enclosure as well!
       val enclosure = createEnclosure(cluster, currentPos, visited)
       val (xOffset, yOffset) = (enclosure.position.x - cluster.pos.x, enclosure.position.y - cluster.pos.y)
       val cellsToRemove = enclosure.getPositions.map(pos => Position(pos.x + xOffset, pos.y + yOffset))
-      //val updatedCluster = cluster.removeCells(enclosure.cells.take(enclosure.cells.length - 1))
       val updatedCluster = cluster.removeCells(cellsToRemove)
       (enclosure :: enclosureAcc, Some(currentPos), Some(updatedCluster))
     } else {
